@@ -72,7 +72,6 @@ describe('Gilded Rose', () => {
   it('should update properly the quality property', () => {
     const gildedRose = createTestShop();
     gildedRose.updateQuality();
-    console.log(gildedRose.items);
     expect(gildedRose.items[7].quality).toEqual(50);
   });
 

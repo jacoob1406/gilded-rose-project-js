@@ -1,11 +1,6 @@
-Gilded Rose Kata for javascript (es2015)
+# Zaawansowane Języki Programowania Projekt
 
-See specification.txt
+## Twórcy
 
-Run fixture:
-
-    npm run fixture
-
-Run tests:
-
-    npm run test
+Jakub Lemka </br>
+Marcin Mokrzan </br>

@@ -19,11 +19,15 @@ const isSulfuras = item => {
 };
 
 const inceraseQuality = item => {
-  item.quality++;
+  if (item.quality < 50) {
+    item.quality++;
+  }
 };
 
 const decreaseQuality = item => {
-  item.quality--;
+  if (item.quality > 0) {
+    item.quality--;
+  }
 };
 
 const updateItem = item => {
@@ -34,19 +38,13 @@ const updateItem = item => {
       }
     }
   } else {
-    if (item.quality < 50) {
-      inceraseQuality(item);
-      if (isConcertTicket(item)) {
-        if (item.sellIn < 11) {
-          if (item.quality < 50) {
-            inceraseQuality(item);
-          }
-        }
-        if (item.sellIn < 6) {
-          if (item.quality < 50) {
-            inceraseQuality(item);
-          }
-        }
+    inceraseQuality(item);
+    if (isConcertTicket(item)) {
+      if (item.sellIn < 11) {
+        inceraseQuality(item);
+      }
+      if (item.sellIn < 6) {
+        inceraseQuality(item);
       }
     }
   }
@@ -56,18 +54,14 @@ const updateItem = item => {
   if (item.sellIn < 0) {
     if (!isAgedBrie(item)) {
       if (!isConcertTicket(item)) {
-        if (item.quality > 0) {
-          if (!isSulfuras(item)) {
-            decreaseQuality(item);
-          }
+        if (!isSulfuras(item)) {
+          decreaseQuality(item);
         }
       } else {
         item.quality = item.quality - item.quality;
       }
     } else {
-      if (item.quality < 50) {
-        inceraseQuality(item);
-      }
+      inceraseQuality(item);
     }
   }
 };

@@ -6,42 +6,59 @@ export class Item {
   }
 }
 
+const isAgedBrie = item => {
+  return item.name === 'Aged Brie';
+};
+
+const isConcertTicket = item => {
+  return item.name === 'Backstage passes to a TAFKAL80ETC concert';
+};
+
+const isSulfuras = item => {
+  return item.name === 'Sulfuras, Hand of Ragnaros';
+};
+
+const inceraseQuantity = item => {
+  item.quality++;
+};
+
+const decreaseQuantity = item => {
+  item.quality--;
+};
+
 const updateItem = item => {
-  if (
-    item.name != 'Aged Brie' &&
-    item.name != 'Backstage passes to a TAFKAL80ETC concert'
-  ) {
+  if (!isAgedBrie(item) && !isConcertTicket(item)) {
     if (item.quality > 0) {
-      if (item.name != 'Sulfuras, Hand of Ragnaros') {
-        item.quality = item.quality - 1;
+      if (!isSulfuras(item)) {
+        decreaseQuantity(item);
       }
     }
   } else {
     if (item.quality < 50) {
-      item.quality = item.quality + 1;
-      if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+      inceraseQuantity(item);
+      if (isConcertTicket(item)) {
         if (item.sellIn < 11) {
           if (item.quality < 50) {
-            item.quality = item.quality + 1;
+            inceraseQuantity(item);
           }
         }
         if (item.sellIn < 6) {
           if (item.quality < 50) {
-            item.quality = item.quality + 1;
+            inceraseQuantity(item);
           }
         }
       }
     }
   }
-  if (item.name != 'Sulfuras, Hand of Ragnaros') {
+  if (!isSulfuras(item)) {
     item.sellIn = item.sellIn - 1;
   }
   if (item.sellIn < 0) {
-    if (item.name != 'Aged Brie') {
-      if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+    if (!isAgedBrie(item)) {
+      if (!isConcertTicket(item)) {
         if (item.quality > 0) {
-          if (item.name != 'Sulfuras, Hand of Ragnaros') {
-            item.quality = item.quality - 1;
+          if (!isSulfuras(item)) {
+            decreaseQuantity(item);
           }
         }
       } else {
@@ -49,7 +66,7 @@ const updateItem = item => {
       }
     } else {
       if (item.quality < 50) {
-        item.quality = item.quality + 1;
+        inceraseQuantity(item);
       }
     }
   }

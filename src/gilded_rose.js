@@ -18,11 +18,11 @@ const isSulfuras = item => {
   return item.name === 'Sulfuras, Hand of Ragnaros';
 };
 
-const inceraseQuantity = item => {
+const inceraseQuality = item => {
   item.quality++;
 };
 
-const decreaseQuantity = item => {
+const decreaseQuality = item => {
   item.quality--;
 };
 
@@ -30,21 +30,21 @@ const updateItem = item => {
   if (!isAgedBrie(item) && !isConcertTicket(item)) {
     if (item.quality > 0) {
       if (!isSulfuras(item)) {
-        decreaseQuantity(item);
+        decreaseQuality(item);
       }
     }
   } else {
     if (item.quality < 50) {
-      inceraseQuantity(item);
+      inceraseQuality(item);
       if (isConcertTicket(item)) {
         if (item.sellIn < 11) {
           if (item.quality < 50) {
-            inceraseQuantity(item);
+            inceraseQuality(item);
           }
         }
         if (item.sellIn < 6) {
           if (item.quality < 50) {
-            inceraseQuantity(item);
+            inceraseQuality(item);
           }
         }
       }
@@ -58,7 +58,7 @@ const updateItem = item => {
       if (!isConcertTicket(item)) {
         if (item.quality > 0) {
           if (!isSulfuras(item)) {
-            decreaseQuantity(item);
+            decreaseQuality(item);
           }
         }
       } else {
@@ -66,7 +66,7 @@ const updateItem = item => {
       }
     } else {
       if (item.quality < 50) {
-        inceraseQuantity(item);
+        inceraseQuality(item);
       }
     }
   }

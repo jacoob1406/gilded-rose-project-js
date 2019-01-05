@@ -60,12 +60,6 @@ export class Shop {
     this.items = items;
   }
   updateQuality() {
-    for (var i = 0; i < this.items.length; i++) {
-      const item = this.items[i];
-
-      updateItem(item);
-    }
-
-    return this.items;
+    this.items.forEach(updateItem);
   }
 }

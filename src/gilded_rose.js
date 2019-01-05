@@ -31,12 +31,14 @@ const decreaseQuality = item => {
 };
 
 const updateItem = item => {
+  if (isSulfuras(item)) {
+    return;
+  }
+
+  item.sellIn = item.sellIn - 1;
+
   if (!isAgedBrie(item) && !isConcertTicket(item)) {
-    if (item.quality > 0) {
-      if (!isSulfuras(item)) {
-        decreaseQuality(item);
-      }
-    }
+    decreaseQuality(item);
   } else {
     inceraseQuality(item);
     if (isConcertTicket(item)) {
@@ -48,17 +50,13 @@ const updateItem = item => {
       }
     }
   }
-  if (!isSulfuras(item)) {
-    item.sellIn = item.sellIn - 1;
-  }
+
   if (item.sellIn < 0) {
     if (!isAgedBrie(item)) {
       if (!isConcertTicket(item)) {
-        if (!isSulfuras(item)) {
-          decreaseQuality(item);
-        }
+        decreaseQuality(item);
       } else {
-        item.quality = item.quality - item.quality;
+        decreaseQuality(item);
       }
     } else {
       inceraseQuality(item);

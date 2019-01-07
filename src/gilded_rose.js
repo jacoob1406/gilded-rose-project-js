@@ -45,9 +45,6 @@ const updateItem = item => {
       if (item.sellIn < 11) {
         inceraseQuality(item);
       }
-      if (item.sellIn < 6) {
-        inceraseQuality(item);
-      }
     }
   }
 
@@ -56,10 +53,8 @@ const updateItem = item => {
       if (!isConcertTicket(item)) {
         decreaseQuality(item);
       } else {
-        decreaseQuality(item);
+        inceraseQuality(item);
       }
-    } else {
-      inceraseQuality(item);
     }
   }
 };

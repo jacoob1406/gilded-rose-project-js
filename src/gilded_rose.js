@@ -18,7 +18,11 @@ const isSulfuras = item => {
   return item.name === 'Sulfuras, Hand of Ragnaros';
 };
 
-const inceraseQuality = item => {
+const isExpired = item => {
+  return item.sellIn < 0;
+};
+
+const increaseQuality = item => {
   if (item.quality < 50) {
     item.quality++;
   }
@@ -30,33 +34,60 @@ const decreaseQuality = item => {
   }
 };
 
-const updateItem = item => {
-  if (isSulfuras(item)) {
+const decreaseSellIn = item => {
+  item.sellIn--;
+};
+
+const updateSulfuras = () => {
+  return;
+};
+
+const updateConcertTicket = item => {
+  decreaseSellIn(item);
+
+  if (isExpired(item)) {
+    item.quality = 0;
     return;
   }
+  increaseQuality(item);
 
-  item.sellIn = item.sellIn - 1;
+  if (item.sellIn < 10) {
+    increaseQuality(item);
+  }
+};
 
-  if (!isAgedBrie(item) && !isConcertTicket(item)) {
+const updateAgedBrie = item => {
+  decreaseSellIn(item);
+  increaseQuality(item);
+
+  if (isExpired(item)) {
+    increaseQuality(item);
+  }
+};
+
+const commonUpdate = item => {
+  decreaseSellIn(item);
+  decreaseQuality(item);
+
+  if (isExpired(item)) {
     decreaseQuality(item);
-  } else {
-    inceraseQuality(item);
-    if (isConcertTicket(item)) {
-      if (item.sellIn < 11) {
-        inceraseQuality(item);
-      }
-    }
+  }
+};
+
+const updateItem = item => {
+  if (isSulfuras(item)) {
+    return updateSulfuras;
   }
 
-  if (item.sellIn < 0) {
-    if (!isAgedBrie(item)) {
-      if (!isConcertTicket(item)) {
-        decreaseQuality(item);
-      } else {
-        inceraseQuality(item);
-      }
-    }
+  if (isAgedBrie(item)) {
+    return updateAgedBrie;
   }
+
+  if (isConcertTicket(item)) {
+    return updateConcertTicket;
+  }
+
+  return commonUpdate;
 };
 
 export class Shop {
@@ -64,6 +95,9 @@ export class Shop {
     this.items = items;
   }
   updateQuality() {
-    this.items.forEach(updateItem);
+    this.items.forEach(item => {
+      const update = updateItem(item);
+      update(item);
+    });
   }
 }

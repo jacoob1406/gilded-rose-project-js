@@ -77,16 +77,11 @@ const commonUpdate = item => {
 const updateItem = item => {
   if (isSulfuras(item)) {
     return updateSulfuras;
-  }
-
-  if (isAgedBrie(item)) {
+  } else if (isAgedBrie(item)) {
     return updateAgedBrie;
-  }
-
-  if (isConcertTicket(item)) {
+  } else if (isConcertTicket(item)) {
     return updateConcertTicket;
   }
-
   return commonUpdate;
 };
 
